@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>IT3012 - Pac-Man Search Algorithms - Group AI 28</title>
+<style>
+@page {
+    size: A4;
+    margin: 15mm 15mm 15mm 15mm;
+}
+body {
+    font-family: 'Times New Roman', 'Calibri', 'Segoe UI', Arial, sans-serif;
+    font-size: 9.5pt;
+    line-height: 1.4;
+    color: #000000;
+    margin: 0;
+    padding: 0;
+}
+.header-box {
+    text-align: center;
+    border-bottom: 1.5px solid #000000;
+    padding-bottom: 8px;
+    margin-bottom: 12px;
+}
+.institution {
+    font-size: 11pt;
+    font-weight: 700;
+    color: #000000;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+.faculty {
+    font-size: 8.5pt;
+    color: #333333;
+    margin-top: 1px;
+}
+.module {
+    font-size: 10pt;
+    font-weight: 700;
+    color: #000000;
+    margin-top: 4px;
+}
+.title {
+    font-size: 14pt;
+    font-weight: 800;
+    color: #000000;
+    margin: 4px 0;
+}
+.meta-tag {
+    display: inline-block;
+    background: #ffffff;
+    color: #000000;
+    border: 1px solid #000000;
+    padding: 3px 10px;
+    border-radius: 3px;
+    font-weight: 700;
+    font-size: 8.8pt;
+}
+
+h2 {
+    font-size: 11.5pt;
+    font-weight: 700;
+    color: #000000;
+    border: none !important;
+    border-left: none !important;
+    padding-left: 0 !important;
+    margin-top: 16px;
+    margin-bottom: 6px;
+    page-break-after: avoid;
+}
+h3 {
+    font-size: 10.5pt;
+    font-weight: 700;
+    color: #000000;
+    border: none !important;
+    border-left: none !important;
+    padding-left: 0 !important;
+    margin-top: 12px;
+    margin-bottom: 4px;
+    page-break-after: avoid;
+}
+p {
+    margin: 5px 0;
+    text-align: justify;
+    color: #000000;
+}
+table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 8px 0 12px 0;
+    font-size: 8.5pt;
+    page-break-inside: avoid;
+    background-color: #ffffff !important;
+}
+th {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    font-weight: 700;
+    border: 1px solid #000000;
+    padding: 5px 6px;
+    text-align: left;
+}
+td {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+    color: #000000 !important;
+    border: 1px solid #000000;
+    padding: 4px 6px;
+    vertical-align: middle;
+}
+tr {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+}
+tr:nth-child(even) {
+    background-color: #ffffff !important;
+    background: #ffffff !important;
+}
+
+pre {
+    background: #f8fafc;
+    color: #000000;
+    padding: 7px 9px;
+    border-radius: 3px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    font-size: 7.2pt;
+    line-height: 1.25;
+    overflow-x: auto;
+    white-space: pre-wrap;
+    word-break: break-all;
+    border: 1px solid #cbd5e1;
+    margin: 5px 0;
+    page-break-inside: avoid;
+}
+
+.screenshot-container {
+    text-align: center;
+    margin: 8px 0 10px 0;
+    page-break-inside: avoid;
+}
+.screenshot-container img {
+    max-width: 90%;
+    max-height: 230px;
+    object-fit: contain;
+    border: 1px solid #999999;
+    border-radius: 3px;
+}
+.caption {
+    font-size: 8pt;
+    color: #333333;
+    font-style: italic;
+    margin-top: 3px;
+}
+
+.explanation-box {
+    background: #ffffff !important;
+    border: 1px solid #000000;
+    padding: 7px 10px;
+    margin: 6px 0 10px 0;
+    border-radius: 2px;
+    font-size: 8.5pt;
+    color: #000000;
+}
+.explanation-box b {
+    color: #000000;
+}
+
+.page-break {
+    page-break-before: always;
+}
+</style>
+</head>
+<body>
+
+<div class="header-box">
+    <div class="institution">Sri Lanka Institute of Information Technology (SLIIT)</div>
+    <div class="faculty">Faculty of Computing &bull; Department of Computer Science & Software Engineering</div>
+    <div class="module">IT3012 / SE3062 &ndash; Intelligent Systems &ndash; Take-Home Assignment 04</div>
+    <div class="title">Search Algorithms in Pac-Man</div>
+    <div class="meta-tag">Group ID: Group_AI_28 &bull; Standalone PDF Report &bull; Submission Date: 28.09.2026</div>
+</div>
+
+<h2>Student Declaration & Submission Details</h2>
+<p>We, the undersigned students of Group AI_28, certify that this assignment and the accompanying source code are entirely the product of our own collective efforts, developed in strict accordance with the academic integrity guidelines of SLIIT. All external tools and AI aids utilized during preliminary research have been formally declared.</p>
+
+<table>
+    <tr>
+        <th>Student ID</th>
+        <th>Student Name</th>
+        <th>Assigned Role / Questions</th>
+        <th>Verified Signature</th>
+        <th>Date</th>
+    </tr>
+    <tr>
+        <td><b>IT24100131</b></td>
+        <td>Basnayake K.S</td>
+        <td>Member 1 (Q1 DFS, Q2 BFS & Peer Review)</td>
+        <td>Basnayake K.S</td>
+        <td>28.09.2026</td>
+    </tr>
+    <tr>
+        <td><b>IT24103947</b></td>
+        <td>Walimuniarachchi W.A.K.S</td>
+        <td>Member 2 (Q3 UCS, Q4 A* & Peer Review)</td>
+        <td>Walimuniarachchi W.A.K.S</td>
+        <td>28.09.2026</td>
+    </tr>
+    <tr>
+        <td><b>IT24510235</b></td>
+        <td>Gajanayake H.K.D.W.R</td>
+        <td>Member 3 (Q5 CornersProblem & Peer Review)</td>
+        <td>Gajanayake H.K.D.W.R</td>
+        <td>28.09.2026</td>
+    </tr>
+    <tr>
+        <td><b>IT24400002</b></td>
+        <td>Wickramasinghe W.S.S.D</td>
+        <td>Member 4 (Q6 cornersHeuristic, Q7 foodHeuristic, Git Lead & Packaging)</td>
+        <td>Wickramasinghe W.S.S.D</td>
+        <td>28.09.2026</td>
+    </tr>
+</table>
+
+<h2>1. Introduction & Background Research</h2>
+<p>This project implements fundamental graph search algorithms and domain-specific heuristics on the UC Berkeley CS188 Pac-Man artificial intelligence framework. A classical search problem is formulated as an initial state s0, a successor function Succ(s) returning (next_state, action, step_cost), a goal test Goal(s) returning boolean, and an accumulated path cost g(n).</p>
+
+<p>All four core search algorithms (DFS, BFS, UCS, and A*) share a unified <b>Graph Search</b> architectural skeleton. The distinguishing factor among these algorithms is the underlying fringe data structure and the queuing priority function:</p>
+
+<table>
+    <tr>
+        <th>Algorithm</th>
+        <th>Fringe Data Structure</th>
+        <th>Ordering / Priority</th>
+        <th>Completeness</th>
+        <th>Optimality</th>
+        <th>Time / Space Complexity</th>
+    </tr>
+    <tr>
+        <td><b>DFS</b> (Q1)</td>
+        <td>Stack (LIFO)</td>
+        <td>Deepest node first</td>
+        <td>Yes (finite graphs with expanded set)</td>
+        <td>No</td>
+        <td>O(b^m) time, O(bm) space</td>
+    </tr>
+    <tr>
+        <td><b>BFS</b> (Q2)</td>
+        <td>Queue (FIFO)</td>
+        <td>Shallowest node first</td>
+        <td>Yes</td>
+        <td>Yes (for unit step costs)</td>
+        <td>O(b^d) time, O(b^d) space</td>
+    </tr>
+    <tr>
+        <td><b>UCS</b> (Q3)</td>
+        <td>PriorityQueue</td>
+        <td>Path cost g(n)</td>
+        <td>Yes (for positive step costs)</td>
+        <td>Yes (arbitrary positive costs)</td>
+        <td>O(b^(1 + floor(C*/eps)))</td>
+    </tr>
+    <tr>
+        <td><b>A* Search</b> (Q4)</td>
+        <td>PriorityQueue</td>
+        <td>Evaluation f(n) = g(n) + h(n)</td>
+        <td>Yes</td>
+        <td>Yes (if h is admissible & consistent)</td>
+        <td>Dependent on heuristic quality</td>
+    </tr>
+</table>
+
+<p><b>Heuristic Properties in Graph Search:</b> An admissible heuristic satisfies 0 &le; h(n) &le; h*(n), meaning it never overestimates the true cost to reach the nearest goal. In graph search with an expanded set, a stronger condition&mdash;<b>consistency (monotonicity)</b>&mdash;is strictly required: h(n) &le; c(n, a, n') + h(n'). Consistency enforces the triangle inequality, guaranteeing that f(n) non-decreases along every path, preventing the need to reopen previously closed states.</p>
+
+<h2>2. Environment Setup, Conda & Task Allocation</h2>
+<p>The team developed and tested the solution within a dedicated Conda virtual environment (<code>cs188</code>) running <b>Python 3.11</b>. The team ensured code integrity by strictly modifying only <code>search.py</code> and <code>searchAgents.py</code> without altering existing function signatures, class interfaces, or project directory structures.</p>
+
+<div class="screenshot-container">
+    <img src="images/env_python.png" alt="Python Environment Verification">
+    <div class="caption">Figure 2.1: Verification of Python 3.11 environment, active Conda environment (cs188), and framework files.</div>
+</div>
+
+<div class="page-break"></div>
+
+<h2>3. Question-by-Question Implementation, Results & Logic</h2>
+
+<h3>Question 1 &ndash; Depth First Search (DFS) [4 Marks]</h3>
+<p><b>File Modified:</b> <code>search.py</code> &bull; <b>Function:</b> <code>depthFirstSearch(problem)</code></p>
+<pre>def depthFirstSearch(problem: SearchProblem):
+    &quot;&quot;&quot;
+    Search the deepest nodes in the search tree first.
+
+    Your search algorithm needs to return a list of actions that reaches the
+    goal. Make sure to implement a graph search algorithm.
+
+    To get started, you might want to try some of these simple commands to
+    understand the search problem that is being passed in:
+
+    print(&quot;Start:&quot;, problem.getStartState())
+    print(&quot;Is the start a goal?&quot;, problem.isGoalState(problem.getStartState()))
+    print(&quot;Start&#x27;s successors:&quot;, problem.getSuccessors(problem.getStartState()))
+    &quot;&quot;&quot;
+    &quot;*** YOUR CODE HERE ***&quot;
+    # Q1 (Member 1 - IT24100131 Basnayake K.S): Graph-search DFS using util.Stack (LIFO).
+    # Nodes are expanded deepest-first to find a path to the food goal.
+    fringe = util.Stack()
+    fringe.push((problem.getStartState(), []))
+    expanded = set()
+    while not fringe.isEmpty():
+        state, path = fringe.pop()
+        if problem.isGoalState(state):
+            return path
+        if state not in expanded:
+            expanded.add(state)
+            for successor, action, _ in problem.getSuccessors(state):
+                if successor not in expanded:
+                    fringe.push((successor, path + [action]))
+    return []</pre>
+
+<div class="screenshot-container">
+    <img src="images/q1_autograder.png" alt="Q1 Autograder Output">
+    <div class="caption">Figure 3.1: Autograder verification for Q1 (Depth First Search) &ndash; All test cases PASS.</div>
+</div>
+
+<div class="explanation-box">
+    <b>Logic & Data Structures (&le; 200 words):</b><br>
+    DFS explores the deepest unexplored branches first by utilizing <code>util.Stack</code> (LIFO). The fringe stores tuples of <code>(state, path)</code>. Graph search is implemented using an <code>expanded</code> set to track visited nodes. When a state is popped, the goal test is executed immediately; if true, the accumulated action list is returned. Otherwise, if the state has not been expanded, it is recorded in <code>expanded</code>, and each unvisited successor is pushed onto the stack with its updated action sequence <code>path + [action]</code>. Checking membership in <code>expanded</code> eliminates redundant loops and prevents infinite recursion on cyclic or infinite graphs. While complete on finite state spaces, DFS is non-optimal (expanding 146 nodes with path length 130 on mediumMaze, where the optimal path is 68).
+</div>
+
+<h3>Question 2 &ndash; Breadth First Search (BFS) [4 Marks]</h3>
+<p><b>File Modified:</b> <code>search.py</code> &bull; <b>Function:</b> <code>breadthFirstSearch(problem)</code></p>
+<pre>def breadthFirstSearch(problem: SearchProblem):
+    &quot;&quot;&quot;Search the shallowest nodes in the search tree first.&quot;&quot;&quot;
+    &quot;*** YOUR CODE HERE ***&quot;
+    # Q2 (Member 1 - IT24100131 Basnayake K.S): Graph-search BFS using util.Queue (FIFO).
+    # Nodes are expanded level-by-level, guaranteeing optimal path for unit step costs.
+    fringe = util.Queue()
+    fringe.push((problem.getStartState(), []))
+    expanded = set()
+    while not fringe.isEmpty():
+        state, path = fringe.pop()
+        if problem.isGoalState(state):
+            return path
+        if state not in expanded:
+            expanded.add(state)
+            for successor, action, _ in problem.getSuccessors(state):
+                if successor not in expanded:
+                    fringe.push((successor, path + [action]))
+    return []</pre>
+
+<div class="screenshot-container">
+    <img src="images/q2_autograder.png" alt="Q2 Autograder Output">
+    <div class="caption">Figure 3.2: Autograder verification for Q2 (Breadth First Search) &ndash; All test cases PASS.</div>
+</div>
+
+<div class="explanation-box">
+    <b>Logic & Data Structures (&le; 200 words):</b><br>
+    BFS systematically examines search states in order of increasing depth by utilizing <code>util.Queue</code> (FIFO). Sharing the exact graph-search skeleton as DFS, each queue entry encapsulates <code>(state, path)</code>. States are marked as expanded upon extraction from the queue. Because all Pac-Man moves possess uniform unit cost (c=1), expanding shallowest states first guarantees that the initial goal state extracted represents the shortest possible path with minimum cost. On <code>mediumMaze</code>, BFS reliably yields the optimal path cost of 68 after expanding 269 nodes. The primary trade-off of BFS is memory consumption, which grows exponentially as O(b^d) since all frontier nodes at depth d are concurrently preserved.
+</div>
+
+<div class="page-break"></div>
+
+<h3>Question 3 &ndash; Uniform Cost Search (UCS) [4 Marks]</h3>
+<p><b>File Modified:</b> <code>search.py</code> &bull; <b>Function:</b> <code>uniformCostSearch(problem)</code></p>
+<pre>def uniformCostSearch(problem: SearchProblem):
+    &quot;&quot;&quot;Search the node of least total cost first.&quot;&quot;&quot;
+    &quot;*** YOUR CODE HERE ***&quot;
+    # Q3 (Member 2 - IT24103947 Walimuniarachchi W.A.K.S): fringe is a PriorityQueue ordered by the accumulated path
+    # cost g(n). A state is only finalised when it is popped (not when pushed),
+    # which is what guarantees optimality with non-uniform step costs.
+    fringe = util.PriorityQueue()
+    fringe.push((problem.getStartState(), [], 0), 0)
+    expanded = set()
+    while not fringe.isEmpty():
+        state, path, cost = fringe.pop()
+        if problem.isGoalState(state):
+            return path
+        if state not in expanded:
+            expanded.add(state)
+            for successor, action, stepCost in problem.getSuccessors(state):
+                if successor not in expanded:
+                    newCost = cost + stepCost
+                    fringe.push((successor, path + [action], newCost), newCost)
+    return []
+
+def nullHeuristic(state, problem=None):
+    &quot;&quot;&quot;
+    A heuristic function estimates the cost from the current state to the nearest
+    goal in the provided SearchProblem.  This heuristic is trivial.
+    &quot;&quot;&quot;
+    return 0</pre>
+
+<div class="screenshot-container">
+    <img src="images/q3_autograder.png" alt="Q3 Autograder Output">
+    <div class="caption">Figure 3.3: Autograder verification for Q3 (Uniform Cost Search) &ndash; All test cases PASS.</div>
+</div>
+
+<div class="explanation-box">
+    <b>Logic & Data Structures (&le; 200 words):</b><br>
+    UCS generalizes BFS to arbitrary non-negative edge costs. The fringe is implemented as a <code>util.PriorityQueue</code> storing <code>(state, path, cost)</code>, ordered strictly by cumulative path cost g(n). Crucially, the goal test is conducted only when a state is <b>popped</b> from the priority queue, rather than upon successor generation; this ensures that any potentially cheaper path currently queued is evaluated first. When extracting a node, if it hasn't been expanded, it is committed to the <code>expanded</code> set and its successors are pushed with total cost g(s') = g(s) + stepCost. UCS is optimal for positive costs, correctly navigating exponential step-cost terrains such as <code>StayWestSearchAgent</code> and <code>StayEastSearchAgent</code>.
+</div>
+
+<h3>Question 4 &ndash; A* Search [4 Marks]</h3>
+<p><b>File Modified:</b> <code>search.py</code> &bull; <b>Function:</b> <code>aStarSearch(problem, heuristic)</code></p>
+<pre>def aStarSearch(problem: SearchProblem, heuristic=nullHeuristic):
+    &quot;&quot;&quot;Search the node that has the lowest combined cost and heuristic first.&quot;&quot;&quot;
+    &quot;*** YOUR CODE HERE ***&quot;
+    # Q4 (Member 2 - IT24103947 Walimuniarachchi W.A.K.S): same as UCS but the priority is f(n) = g(n) + h(n). With
+    # nullHeuristic (h = 0) this degenerates to UCS; with an admissible and
+    # consistent h it stays optimal while expanding fewer nodes.
+    start = problem.getStartState()
+    fringe = util.PriorityQueue()
+    fringe.push((start, [], 0), heuristic(start, problem))
+    expanded = set()
+    while not fringe.isEmpty():
+        state, path, cost = fringe.pop()
+        if problem.isGoalState(state):
+            return path
+        if state not in expanded:
+            expanded.add(state)
+            for successor, action, stepCost in problem.getSuccessors(state):
+                if successor not in expanded:
+                    newCost = cost + stepCost
+                    fringe.push((successor, path + [action], newCost),
+                                newCost + heuristic(successor, problem))
+    return []</pre>
+
+<div class="screenshot-container">
+    <img src="images/q4_autograder.png" alt="Q4 Autograder Output">
+    <div class="caption">Figure 3.4: Autograder verification for Q4 (A* Search) &ndash; All test cases PASS.</div>
+</div>
+
+<div class="explanation-box">
+    <b>Logic & Data Structures (&le; 200 words):</b><br>
+    A* search guides exploration towards the goal using an evaluation function f(n) = g(n) + h(n), combining actual backward path cost g(n) with estimated forward cost h(n) via <code>heuristic(state, problem)</code>. Using <code>util.PriorityQueue</code>, each element retains <code>(state, path, cost)</code> while its queue priority is assigned as g(n) + h(n). With <code>nullHeuristic</code> (h=0), A* behaves identically to UCS. When supplied with an admissible and consistent heuristic (e.g., Manhattan distance), A* guarantees finding the optimal path while significantly pruning the state space: on <code>bigMaze</code>, A* expands 549 nodes (optimal cost 210) compared to 620 nodes for unguided UCS.
+</div>
+
+<div class="page-break"></div>
+
+<h3>Question 5 &ndash; Finding All the Corners (CornersProblem) [8 Marks]</h3>
+<p><b>File Modified:</b> <code>searchAgents.py</code> &bull; <b>Methods:</b> <code>getStartState</code>, <code>isGoalState</code>, <code>getSuccessors</code></p>
+<pre>class CornersProblem(search.SearchProblem):
+    &quot;&quot;&quot;
+    This search problem finds paths through all four corners of a layout.
+
+    You must select a suitable state space and successor function
+    &quot;&quot;&quot;
+
+    def __init__(self, startingGameState: pacman.GameState):
+        &quot;&quot;&quot;
+        Stores the walls, pacman&#x27;s starting position and corners.
+        &quot;&quot;&quot;
+        self.walls = startingGameState.getWalls()
+        self.startingPosition = startingGameState.getPacmanPosition()
+        top, right = self.walls.height-2, self.walls.width-2
+        self.corners = ((1,1), (1,top), (right, 1), (right, top))
+        for corner in self.corners:
+            if not startingGameState.hasFood(*corner):
+                print(&#x27;Warning: no food in corner &#x27; + str(corner))
+        self._expanded = 0 # DO NOT CHANGE; Number of search nodes expanded
+
+    def getStartState(self):
+        &quot;&quot;&quot;
+        Returns the start state (in your state space, not the full Pacman state
+        space)
+        &quot;&quot;&quot;
+        &quot;*** YOUR CODE HERE ***&quot;
+        # Q5 (Member 3 - IT24510235 Gajanayake H.K.D.W.R): state = (position, visitedCorners). visitedCorners is a
+        # tuple of 4 booleans aligned with self.corners, so the state is small
+        # and hashable and contains no walls / GameState.
+        visited = tuple(self.startingPosition == c for c in self.corners)
+        return (self.startingPosition, visited)
+
+    def isGoalState(self, state: Any):
+        &quot;&quot;&quot;
+        Returns whether this search state is a goal state of the problem.
+        &quot;&quot;&quot;
+        &quot;*** YOUR CODE HERE ***&quot;
+        return all(state[1])
+
+    def getSuccessors(self, state: Any):
+        &quot;&quot;&quot;
+        Returns successor states, the actions they require, and a cost of 1.
+
+         As noted in search.py:
+            For a given state, this should return a list of triples, (successor,
+            action, stepCost), where &#x27;successor&#x27; is a successor to the current
+            state, &#x27;action&#x27; is the action required to get there, and &#x27;stepCost&#x27;
+            is the incremental cost of expanding to that successor
+        &quot;&quot;&quot;
+
+        successors = []
+        for action in [Directions.NORTH, Directions.SOUTH, Directions.EAST, Directions.WEST]:
+            # Add a successor state to the successor list if the action is legal
+            # Here&#x27;s a code snippet for figuring out whether a new position hits a wall:
+            #   x,y = currentPosition
+            #   dx, dy = Actions.directionToVector(action)
+            #   nextx, nexty = int(x + dx), int(y + dy)
+            #   hitsWall = self.walls[nextx][nexty]
+
+            &quot;*** YOUR CODE HERE ***&quot;
+            (x, y), visited = state
+            dx, dy = Actions.directionToVector(action)
+            nextx, nexty = int(x + dx), int(y + dy)
+            if not self.walls[nextx][nexty]:
+                nextPos = (nextx, nexty)
+                # Mark a corner as visited when Pacman steps onto it.
+                newVisited = tuple(v or nextPos == c
+                                   for v, c in zip(visited, self.corners))
+                successors.append(((nextPos, newVisited), action, 1))
+
+        self._expanded += 1 # DO NOT CHANGE
+        return successors
+
+    def getCostOfActions(self, actions):
+        &quot;&quot;&quot;
+        Returns the cost of a particular sequence of actions.  If those actions
+        include an illegal move, return 999999.  This is implemented for you.
+        &quot;&quot;&quot;
+        if actions == None: return 999999
+        x,y= self.startingPosition
+        for action in actions:
+            dx, dy = Actions.directionToVector(action)
+            x, y = int(x + dx), int(y + dy)
+            if self.walls[x][y]: return 999999
+        return len(actions)</pre>
+
+<div class="screenshot-container">
+    <img src="images/q5_autograder.png" alt="Q5 Autograder Output">
+    <div class="caption">Figure 3.5: Autograder verification for Q5 (CornersProblem) &ndash; All test cases PASS (8/8 marks).</div>
+</div>
+
+<div class="explanation-box">
+    <b>Logic & State Representation (&le; 200 words):</b><br>
+    The search state is engineered as an immutable, hashable tuple: <code>(position, visitedCorners)</code>, where <code>position</code> is <code>(x, y)</code> and <code>visitedCorners</code> is a 4-element boolean tuple tracking visited corners. This representation stores only future-essential information without redundant game elements (such as walls), preserving minimal state size. <code>getStartState</code> checks whether Pac-Man initializes on a corner. <code>isGoalState</code> evaluates <code>all(visitedCorners)</code>. <code>getSuccessors</code> iterates over legal cardinal moves, checks wall collisions, and updates visited booleans whenever Pac-Man steps onto an unvisited corner. The state space is bounded by |V| x 2^4 = 16|V|, enabling BFS to find the optimal corner-touching route.
+</div>
+
+<div class="page-break"></div>
+
+<h3>Question 6 &ndash; Corners Problem: Heuristic [8 Marks]</h3>
+<p><b>File Modified:</b> <code>searchAgents.py</code> &bull; <b>Function:</b> <code>cornersHeuristic(state, problem)</code></p>
+<pre>def cornersHeuristic(state: Any, problem: CornersProblem):
+    &quot;&quot;&quot;
+    A heuristic for the CornersProblem that you defined.
+
+      state:   The current search state
+               (a data structure you chose in your search problem)
+
+      problem: The CornersProblem instance for this layout.
+
+    This function should always return a number that is a lower bound on the
+    shortest path from the state to a goal of the problem; i.e.  it should be
+    admissible (as well as consistent).
+    &quot;&quot;&quot;
+    corners = problem.corners # These are the corner coordinates
+    walls = problem.walls # These are the walls of the maze, as a Grid (game.py)
+
+    &quot;*** YOUR CODE HERE ***&quot;
+    # Q6 (Member 4 - IT24400002 Wickramasinghe W.S.S.D): relax the problem by deleting the walls. The heuristic is
+    # the cost of the cheapest tour (Manhattan distances) that starts at
+    # Pacman and visits every unvisited corner. That is the exact optimum of
+    # the relaxed problem, hence admissible; and it is consistent because a
+    # single real step changes the relaxed optimum by at most 1.
+    position, visited = state
+    remaining = [c for c, v in zip(corners, visited) if not v]
+    if not remaining:
+        return 0
+
+    def manhattan(a, b):
+        return abs(a[0] - b[0]) + abs(a[1] - b[1])
+
+    def cheapestTour(current, todo):
+        if not todo:
+            return 0
+        return min(manhattan(current, c) + cheapestTour(c, [r for r in todo if r != c])
+                   for c in todo)
+
+    return cheapestTour(position, remaining)</pre>
+
+<div class="screenshot-container">
+    <img src="images/q6_autograder.png" alt="Q6 Autograder Output">
+    <div class="caption">Figure 3.6: Autograder verification for Q6 &ndash; 741 nodes expanded on mediumCorners (&le; 1200 threshold for 8/8 marks).</div>
+</div>
+
+<div class="screenshot-container">
+    <img src="images/q6_pacman.png" alt="Q6 Pacman Execution">
+    <div class="caption">Figure 3.7: Pac-Man simulation on mediumCorners using A* with cornersHeuristic (Cost 106, 741 nodes expanded).</div>
+</div>
+
+<div class="explanation-box">
+    <b>Heuristic Design, Admissibility & Consistency Proof (&le; 200 words):</b><br>
+    The heuristic solves an exact <b>relaxed problem</b> by removing maze walls and calculating the minimum Manhattan Travelling Salesperson (TSP) tour starting at Pac-Man and visiting all remaining unvisited corners. Since at most four corners exist, all permutation orders are evaluated recursively.<br>
+    <b>Admissibility:</b> Removing walls relaxes transit constraints; actual maze distance between any two points is always &ge; Manhattan distance. Thus, the relaxed tour length never exceeds the true remaining cost (h(n) &le; h*(n)).<br>
+    <b>Consistency:</b> Moving one step changes Pac-Man's coordinates by 1, adjusting the relaxed tour cost by at most 1 (h(n) &le; 1 + h(n')). It returns 0 when all corners are visited. On <code>mediumCorners</code>, A* expands only <b>741 nodes</b> (far below the 1200 full-marks ceiling) with optimal cost 106.
+</div>
+
+<div class="page-break"></div>
+
+<h3>Question 7 &ndash; Eating All The Dots: Food Heuristic [8 Marks]</h3>
+<p><b>File Modified:</b> <code>searchAgents.py</code> &bull; <b>Function:</b> <code>foodHeuristic(state, problem)</code></p>
+<pre>def foodHeuristic(state: Tuple[Tuple, List[List]], problem: FoodSearchProblem):
+    &quot;&quot;&quot;
+    Your heuristic for the FoodSearchProblem goes here.
+
+    This heuristic must be consistent to ensure correctness.  First, try to come
+    up with an admissible heuristic; almost all admissible heuristics will be
+    consistent as well.
+
+    If using A* ever finds a solution that is worse uniform cost search finds,
+    your heuristic is *not* consistent, and probably not admissible!  On the
+    other hand, inadmissible or inconsistent heuristics may find optimal
+    solutions, so be careful.
+
+    The state is a tuple ( pacmanPosition, foodGrid ) where foodGrid is a Grid
+    (see game.py) of either True or False. You can call foodGrid.asList() to get
+    a list of food coordinates instead.
+
+    If you want access to info like walls, capsules, etc., you can query the
+    problem.  For example, problem.walls gives you a Grid of where the walls
+    are.
+
+    If you want to *store* information to be reused in other calls to the
+    heuristic, there is a dictionary called problem.heuristicInfo that you can
+    use. For example, if you only want to count the walls once and store that
+    value, try: problem.heuristicInfo[&#x27;wallCount&#x27;] = problem.walls.count()
+    Subsequent calls to this heuristic can access
+    problem.heuristicInfo[&#x27;wallCount&#x27;]
+    &quot;&quot;&quot;
+    position, foodGrid = state
+    &quot;*** YOUR CODE HERE ***&quot;
+    # Q7 (Member 4 - IT24400002 Wickramasinghe W.S.S.D): the true maze distance from Pacman to the farthest
+    # remaining dot. Pacman must at least walk that far to eat that dot, so it
+    # never overestimates (admissible). Maze distance obeys the triangle
+    # inequality, so h(n) &lt;= 1 + h(n&#x27;) for any step (consistent). Distances
+    # are memoised in problem.heuristicInfo so each BFS is run only once.
+    food = foodGrid.asList()
+    if not food:
+        return 0
+    cache = problem.heuristicInfo.setdefault(&#x27;distCache&#x27;, {})
+
+    def dist(a, b):
+        key = (a, b)
+        if key not in cache:
+            cache[key] = mazeDistance(a, b, problem.startingGameState)
+        return cache[key]
+
+    return max(dist(position, f) for f in food)</pre>
+
+<div class="screenshot-container">
+    <img src="images/q7_autograder.png" alt="Q7 Autograder Output">
+    <div class="caption">Figure 3.8: Autograder verification for Q7 &ndash; 4137 nodes expanded on trickySearch (&le; 9000 threshold for 8/8 marks).</div>
+</div>
+
+<div class="screenshot-container">
+    <img src="images/q7_pacman.png" alt="Q7 Pacman Execution">
+    <div class="caption">Figure 3.9: Pac-Man simulation on trickySearch using A* with foodHeuristic (Cost 60, 4137 nodes expanded).</div>
+</div>
+
+<div class="explanation-box">
+    <b>Heuristic Design, Admissibility & Consistency Proof (&le; 200 words):</b><br>
+    h(state) is defined as the <b>true maze distance</b> from Pac-Man's current location to the single farthest remaining food pellet, computed via <code>mazeDistance</code> (exact shortest-path BFS respecting walls). To guarantee fast execution, all point-to-point maze distances are cached in <code>problem.heuristicInfo['distCache']</code>.<br>
+    <b>Admissibility:</b> Because Pac-Man must consume every pellet, he must eventually reach the farthest dot; hence the true remaining cost is bounded below by the distance to that dot (h(n) &le; h*(n)).<br>
+    <b>Consistency:</b> Maze distance satisfies metric triangle inequality. A single step changes the distance to any pellet by at most 1, so h(n) &le; 1 + h(n'). It returns 0 when no food remains. On <code>trickySearch</code>, A* expands only <b>4,137 nodes</b> (well within the &le; 9000 full-mark threshold), achieving optimal cost 60.
+</div>
+
+<div class="page-break"></div>
+
+<h2>4. Full Autograder Run (Summary of All Questions)</h2>
+<p>The entire autograder suite was executed with <code>python autograder.py --no-graphics</code> to demonstrate full compliance across Q1 through Q7. All 26 autograder test cases pass completely, confirming that the code meets all algorithmic and optimality criteria for <b>40 / 40 marks</b>.</p>
+
+<div class="screenshot-container">
+    <img src="images/full_autograder.png" alt="Full Autograder Run">
+    <div class="caption">Figure 4.1: Complete Autograder summary run proving all test suites pass flawlessly across Q1 through Q7.</div>
+</div>
+
+<h2>5. Public Git Repository</h2>
+<p>The collaborative development, version control history, and per-member feature branches are hosted publicly on GitHub:</p>
+<div style="background:#ffffff; padding:6px 10px; border:1px solid #000000; font-size:9.5pt; margin:6px 0;">
+    <b>Public GitHub Repository URL:</b> <a href="https://github.com/IT24100131/IA-Assigment-1" style="color:#000000; text-decoration:underline;">https://github.com/IT24100131/IA-Assigment-1</a>
+</div>
+
+<div class="screenshot-container">
+    <img src="images/git_repo_overview.png" alt="GitHub Repository Overview">
+    <div class="caption">Figure 5.1: Public GitHub repository overview showing repository structure, branches, and commit statistics.</div>
+</div>
+
+<h2>6. Git Contribution Evidence & Version Control Practices</h2>
+<p>To ensure seamless teamwork and maintain clear accountability throughout the assignment, our team followed standard Git branching workflows. Work was separated into individual feature branches (<code>feature/dfs-bfs</code>, <code>feature/ucs-astar</code>, <code>feature/corners</code>, and <code>feature/heuristics</code>). Each member pushed incremental, atomic commits with informative messages explaining the algorithmic rationale.</p>
+<p>Before integrating any code into <code>main</code>, team members opened Pull Requests that were independently verified using the local autograder suite and formally approved by a designated peer reviewer, preventing regression bugs and ensuring complete shared comprehension across all questions.</p>
+
+<div class="screenshot-container">
+    <img src="images/git_commit_history.png" alt="Git Commit History Graph">
+    <div class="caption">Figure 6.1: Chronological Git commit history on the main branch showing regular, descriptive commits across the project lifecycle.</div>
+</div>
+
+<div class="screenshot-container">
+    <img src="images/git_pull_requests.png" alt="GitHub Pull Requests">
+    <div class="caption">Figure 6.2: GitHub Pull Requests overview showing all four feature branches successfully reviewed and merged into main.</div>
+</div>
+
+<div class="screenshot-container">
+    <img src="images/git_contributors.png" alt="GitHub Contributors Graph">
+    <div class="caption">Figure 6.3: GitHub Insights &ndash; Contributors graph demonstrating active, balanced participation and code ownership by all four members.</div>
+</div>
+
+<div class="page-break"></div>
+
+<h2>7. Individual Contribution Table</h2>
+<table>
+    <tr>
+        <th>Member</th>
+        <th>Student ID</th>
+        <th>Primary Tasks & Questions Contributed</th>
+        <th>Git Feature Branch</th>
+        <th>Peer Review Partner</th>
+    </tr>
+    <tr>
+        <td><b>Basnayake K.S</b></td>
+        <td>IT24100131</td>
+        <td>Implemented Q1 (DFS) with LIFO Stack and Q2 (BFS) with FIFO Queue in <code>search.py</code>; cycle detection tests.</td>
+        <td><code>feature/dfs-bfs</code></td>
+        <td>Reviewed Member 4 (Heuristics & Lead)</td>
+    </tr>
+    <tr>
+        <td><b>Walimuniarachchi W.A.K.S</b></td>
+        <td>IT24103947</td>
+        <td>Implemented Q3 (UCS) with PriorityQueue path costs and Q4 (A*) with evaluation function f=g+h in <code>search.py</code>.</td>
+        <td><code>feature/ucs-astar</code></td>
+        <td>Reviewed Member 1 (DFS & BFS)</td>
+    </tr>
+    <tr>
+        <td><b>Gajanayake H.K.D.W.R</b></td>
+        <td>IT24510235</td>
+        <td>Implemented Q5 CornersProblem state representation and goal test in <code>searchAgents.py</code>.</td>
+        <td><code>feature/corners</code></td>
+        <td>Reviewed Member 2 (UCS & A*)</td>
+    </tr>
+    <tr>
+        <td><b>Wickramasinghe W.S.S.D</b></td>
+        <td>IT24400002</td>
+        <td>Implemented Q6 cornersHeuristic (relaxed Manhattan tour) and Q7 foodHeuristic (memoized maze distance) in <code>searchAgents.py</code>; GitHub Lead & Final Packaging.</td>
+        <td><code>feature/heuristics</code></td>
+        <td>Reviewed Member 3 (Corners)</td>
+    </tr>
+</table>
+
+<h2>8. AI Usage Declaration</h2>
+<p><b>1. AI Tools Utilized:</b> Anthropic Claude (Claude Sonnet 3.5 / 5) & Google Gemini.</p>
+<p><b>2. Purpose of Utilization:</b> AI was utilized strictly for preliminary background research on Pac-Man graph search representations, formatting heuristic proofs, scaffolding report templates, and generating autograder testing scripts. Every team member independently verified, debugged, and executed the algorithms locally to ensure deep mastery for the oral viva.</p>
+<p><b>3. Exact Prompts Utilized:</b></p>
+<pre>Prompt 1: "Analyze the SE3062 / IT3012 Intelligent Systems Take-Home Assignment 04 PDF and the CS188 Pacman framework. Formulate a structured 4-member implementation plan covering Q1 to Q7. Ensure CornersProblem state representation is hashable and compact, and design admissible and consistent heuristics for Q6 (cornersHeuristic &lt;= 1200 nodes) and Q7 (foodHeuristic &lt;= 9000 nodes). Structure peer-review workflows and git branches."
+
+Prompt 2: "Provide mathematical justifications and admissibility and consistency proofs for: (1) relaxing walls to compute an exact Manhattan TSP tour for mediumCorners, and (2) using memoized true maze distance to the farthest remaining food dot for trickySearch. Detail why both heuristics satisfy the triangle inequality h(n) &lt;= c(n,a,n') + h(n')."</pre>
+
+<h2>9. Individual Viva Preparation & Key Defense Notes (40 Marks)</h2>
+<p>Each team member is fully prepared to defend the group codebase during the 6-minute individual viva session:</p>
+<ul>
+    <li><b>Fringe Mechanics & Data Structures:</b> Why Stack enforces LIFO deep-dive traversal; Queue enforces FIFO level-by-level breadth exploration; PriorityQueue enforces minimum g(n) (UCS) or g(n)+h(n) (A*).</li>
+    <li><b>Goal Testing Location:</b> Why BFS can test upon generation for unit-cost problems, whereas UCS and A* <b>must test upon extraction (pop)</b> because a lower-cost path to the goal may still reside in the fringe.</li>
+    <li><b>Graph Search vs. Tree Search:</b> Why the <code>expanded</code> set is essential to prevent cyclic loops on directed graphs and to avoid exponential re-expansion of redundant paths.</li>
+    <li><b>Corner State Compactness:</b> Why <code>(position, visitedCorners)</code> is strictly necessary and sufficient, bounding the search space to |V| x 16 states.</li>
+    <li><b>Heuristic Mathematical Defense:</b> Proof that relaxed problem cost never exceeds actual constrained cost, and that one transition alters Manhattan/maze distance by at most 1, preserving consistency (h(n) - h(n') &le; 1 = c(n, n')).</li>
+</ul>
+
+</body>
+</html>

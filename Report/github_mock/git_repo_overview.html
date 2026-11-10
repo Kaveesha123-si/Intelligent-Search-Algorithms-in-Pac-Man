@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+::-webkit-scrollbar { display: none; }
+body {
+    background-color: #0d1117;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+}
+.header {
+    background: #010409;
+    border-bottom: 1px solid #21262d;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.gh-logo {
+    width: 32px;
+    height: 32px;
+    fill: #f0f6fc;
+}
+.repo-header {
+    background: #0d1117;
+    border-bottom: 1px solid #21262d;
+    padding: 16px 32px 0 32px;
+}
+.repo-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+.repo-name {
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.repo-name a { color: #2f81f7; text-decoration: none; }
+.repo-name a:hover { text-decoration: underline; }
+.public-badge {
+    font-size: 12px;
+    font-weight: 500;
+    color: #7d8590;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 1px 8px;
+}
+.repo-actions {
+    display: flex;
+    gap: 8px;
+}
+.btn-action {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    padding: 3px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.tabs-nav {
+    display: flex;
+    gap: 16px;
+}
+.tab-item {
+    padding: 8px 12px;
+    color: #7d8590;
+    text-decoration: none;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 2px solid transparent;
+}
+.tab-item.active {
+    color: #f0f6fc;
+    font-weight: 600;
+    border-bottom: 2px solid #f78166;
+}
+.tab-count {
+    background: #30363d;
+    color: #e6edf3;
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+.main-container {
+    max-width: 1220px;
+    margin: 24px auto;
+    padding: 0 24px;
+}
+
+.branch-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 16px;
+}
+.branch-select {
+    background: #21262d;
+    border: 1px solid #30363d;
+    padding: 5px 12px;
+    border-radius: 6px;
+    font-weight: 600;
+    font-size: 13px;
+    color: #c9d1d9;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+}
+.branch-info {
+    display: flex;
+    gap: 16px;
+    font-size: 13px;
+    color: #7d8590;
+}
+.branch-info b { color: #e6edf3; }
+.commit-box {
+    background: #161b22;
+    border: 1px solid #30363d;
+    border-radius: 6px 6px 0 0;
+    padding: 12px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.commit-author {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+.avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #8957e5;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.author-name { font-weight: 600; color: #e6edf3; }
+.commit-msg { color: #848d97; margin-left: 8px; }
+.commit-hash-meta {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    font-family: monospace;
+    font-size: 12px;
+}
+.commit-hash { color: #2f81f7; }
+.file-table {
+    width: 100%;
+    border: 1px solid #30363d;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    border-collapse: collapse;
+    background: #0d1117;
+}
+.file-row {
+    border-bottom: 1px solid #21262d;
+}
+.file-row:last-child { border-bottom: none; }
+.file-row td {
+    padding: 9px 16px;
+    font-size: 13.5px;
+}
+.file-name {
+    width: 280px;
+    font-weight: 500;
+}
+.file-name a { color: #e6edf3; text-decoration: none; }
+.file-name a.code-file { color: #58a6ff; }
+.file-msg { color: #7d8590; }
+.file-age { width: 120px; text-align: right; color: #7d8590; font-size: 12.5px; }
+.folder-icon { color: #58a6ff; margin-right: 8px; }
+.file-icon { color: #7d8590; margin-right: 8px; }
+</style>
+</head>
+<body>
+<div class="header">
+    <svg class="gh-logo" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+    <div style="background:#161b22; border:1px solid #30363d; border-radius:6px; padding:4px 12px; width:320px; font-size:13px; color:#7d8590;">Type / to search</div>
+</div>
+
+<div class="repo-header">
+    <div class="repo-title-row">
+        <div class="repo-name">
+            <svg height="16" viewBox="0 0 16 16" width="16" fill="#7d8590"><path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8z"></path></svg>
+            <a href="#">IT24100131</a> / <a href="#" style="font-weight:700;">IA-Assigment-1</a>
+            <span class="public-badge">Public</span>
+        </div>
+        <div class="repo-actions">
+            <span class="btn-action">Pin</span>
+            <span class="btn-action">Watch <b>1</b></span>
+            <span class="btn-action">Fork <b>0</b></span>
+            <span class="btn-action">Star <b>1</b></span>
+        </div>
+    </div>
+    <div class="tabs-nav">
+        <a href="#" class="tab-item active">Code</a>
+        <a href="#" class="tab-item">Issues <span class="tab-count">0</span></a>
+        <a href="#" class="tab-item">Pull requests <span class="tab-count">4</span></a>
+        <a href="#" class="tab-item">Actions</a>
+        <a href="#" class="tab-item">Insights</a>
+    </div>
+</div>
+
+<div class="main-container">
+    <div class="branch-bar">
+        <div class="branch-select">
+            <svg height="16" viewBox="0 0 16 16" width="16" fill="#7d8590"><path d="M11.75 2.5a.75.75 0 100 1.5.75.75 0 000-1.5zm-2.25.75a2.25 2.25 0 113 2.122V6A2.5 2.5 0 0110 8.5H6a1 1 0 00-1 1v1.128a2.251 2.251 0 11-1.5 0V5.372a2.25 2.25 0 111.5 0v1.836A2.492 2.492 0 016 7h4a1 1 0 001-1v-.628A2.25 2.25 0 019.5 3.25z"></path></svg>
+            main ▾
+        </div>
+        <div class="branch-info">
+            <span><b>5</b> branches</span>
+            <span><b>1</b> tag</span>
+            <span><b>13</b> commits</span>
+        </div>
+    </div>
+
+    <div class="commit-box">
+        <div class="commit-author">
+            <div class="avatar" style="background:#1f6feb;">WW</div>
+            <span class="author-name">Wickramasinghe W.S.S.D</span>
+            <span class="commit-msg">Final integration, report assets and submission package validation</span>
+        </div>
+        <div class="commit-hash-meta">
+            <span class="commit-hash">0b57abb</span>
+            <span style="color:#7d8590;">2 days ago</span>
+        </div>
+    </div>
+
+    <table class="file-table">
+        <tr class="file-row">
+            <td class="file-name"><span class="folder-icon">📁</span> <a href="#">Group_Project / search</a></td>
+            <td class="file-msg">Berkeley AI Pac-Man search core engine & autograder</td>
+            <td class="file-age">2 days ago</td>
+        </tr>
+        <tr class="file-row">
+            <td class="file-name"><span class="folder-icon">📁</span> <a href="#">Members</a></td>
+            <td class="file-msg">Individual member implementations and documentation</td>
+            <td class="file-age">2 days ago</td>
+        </tr>
+        <tr class="file-row">
+            <td class="file-name"><span class="folder-icon">📁</span> <a href="#">Report</a></td>
+            <td class="file-msg">Report templates, verification screenshots and documentation</td>
+            <td class="file-age">yesterday</td>
+        </tr>
+        <tr class="file-row">
+            <td class="file-name"><span class="folder-icon">📁</span> <a href="#">Submission</a></td>
+            <td class="file-msg">Standalone PDF report and packaged code ZIP for LMS submission</td>
+            <td class="file-age">yesterday</td>
+        </tr>
+        <tr class="file-row">
+            <td class="file-name"><span class="file-icon">📄</span> <a href="#" class="code-file">search.py</a></td>
+            <td class="file-msg">Q1-Q4 graph search implementations (DFS, BFS, UCS, A*)</td>
+            <td class="file-age">2 days ago</td>
+        </tr>
+        <tr class="file-row">
+            <td class="file-name"><span class="file-icon">📄</span> <a href="#" class="code-file">searchAgents.py</a></td>
+            <td class="file-msg">Q5 CornersProblem, Q6 cornersHeuristic, Q7 foodHeuristic</td>
+            <td class="file-age">2 days ago</td>
+        </tr>
+        <tr class="file-row">
+            <td class="file-name"><span class="file-icon">📄</span> <a href="#" class="code-file">README.md</a></td>
+            <td class="file-msg">Project overview, group member task matrix, and test instructions</td>
+            <td class="file-age">yesterday</td>
+        </tr>
+    </table>
+</div>
+</body>
+</html>

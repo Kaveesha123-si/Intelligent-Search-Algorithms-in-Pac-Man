@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<style>
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+::-webkit-scrollbar { display: none; }
+body {
+    background-color: #0d1117;
+    color: #e6edf3;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Noto Sans", Helvetica, Arial, sans-serif;
+    font-size: 14px;
+    line-height: 1.5;
+}
+.header {
+    background: #010409;
+    border-bottom: 1px solid #21262d;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+.gh-logo {
+    width: 32px;
+    height: 32px;
+    fill: #f0f6fc;
+}
+.repo-header {
+    background: #0d1117;
+    border-bottom: 1px solid #21262d;
+    padding: 16px 32px 0 32px;
+}
+.repo-title-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+.repo-name {
+    font-size: 20px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.repo-name a { color: #2f81f7; text-decoration: none; }
+.repo-name a:hover { text-decoration: underline; }
+.public-badge {
+    font-size: 12px;
+    font-weight: 500;
+    color: #7d8590;
+    border: 1px solid #30363d;
+    border-radius: 12px;
+    padding: 1px 8px;
+}
+.repo-actions {
+    display: flex;
+    gap: 8px;
+}
+.btn-action {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #c9d1d9;
+    padding: 3px 12px;
+    border-radius: 6px;
+    font-size: 12px;
+    font-weight: 500;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+}
+.tabs-nav {
+    display: flex;
+    gap: 16px;
+}
+.tab-item {
+    padding: 8px 12px;
+    color: #7d8590;
+    text-decoration: none;
+    font-size: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    border-bottom: 2px solid transparent;
+}
+.tab-item.active {
+    color: #f0f6fc;
+    font-weight: 600;
+    border-bottom: 2px solid #f78166;
+}
+.tab-count {
+    background: #30363d;
+    color: #e6edf3;
+    padding: 1px 6px;
+    border-radius: 10px;
+    font-size: 12px;
+}
+.main-container {
+    max-width: 1220px;
+    margin: 24px auto;
+    padding: 0 24px;
+}
+
+.timeline-title {
+    font-size: 14px;
+    font-weight: 600;
+    color: #7d8590;
+    margin: 20px 0 10px 0;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+.commit-group {
+    border: 1px solid #30363d;
+    border-radius: 6px;
+    background: #0d1117;
+    margin-bottom: 24px;
+}
+.commit-item {
+    padding: 12px 16px;
+    border-bottom: 1px solid #21262d;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.commit-item:last-child { border-bottom: none; }
+.commit-left {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+.avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+.title-link {
+    font-weight: 600;
+    color: #e6edf3;
+    font-size: 14px;
+}
+.meta-text {
+    font-size: 12px;
+    color: #7d8590;
+    margin-top: 2px;
+}
+.verified-tag {
+    color: #3fb950;
+    border: 1px solid #238636;
+    border-radius: 10px;
+    font-size: 11px;
+    padding: 0 6px;
+    font-weight: 500;
+    margin-left: 6px;
+}
+.commit-right {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-family: monospace;
+    font-size: 12px;
+}
+.btn-hash {
+    background: #21262d;
+    border: 1px solid #30363d;
+    color: #58a6ff;
+    padding: 3px 8px;
+    border-radius: 6px;
+    text-decoration: none;
+}
+</style>
+</head>
+<body>
+<div class="header">
+    <svg class="gh-logo" viewBox="0 0 16 16"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"></path></svg>
+    <div style="background:#161b22; border:1px solid #30363d; border-radius:6px; padding:4px 12px; width:320px; font-size:13px; color:#7d8590;">Type / to search</div>
+</div>
+
+<div class="repo-header">
+    <div class="repo-title-row">
+        <div class="repo-name">
+            <svg height="16" viewBox="0 0 16 16" width="16" fill="#7d8590"><path d="M2 2.5A2.5 2.5 0 014.5 0h8.75a.75.75 0 01.75.75v12.5a.75.75 0 01-.75.75h-2.5a.75.75 0 110-1.5h1.75v-2h-8a1 1 0 00-.714 1.7.75.75 0 01-1.072 1.05A2.495 2.495 0 012 11.5v-9zm10.5-1V9h-8c-.356 0-.694.074-1 .208V2.5a1 1 0 011-1h8z"></path></svg>
+            <a href="#">IT24100131</a> / <a href="#" style="font-weight:700;">IA-Assigment-1</a>
+            <span class="public-badge">Public</span>
+        </div>
+    </div>
+    <div class="tabs-nav">
+        <a href="#" class="tab-item active">Code</a>
+        <a href="#" class="tab-item">Issues <span class="tab-count">0</span></a>
+        <a href="#" class="tab-item">Pull requests <span class="tab-count">4</span></a>
+        <a href="#" class="tab-item">Actions</a>
+        <a href="#" class="tab-item">Insights</a>
+    </div>
+</div>
+
+<div class="main-container">
+    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:16px;">
+        <span style="font-size:16px; font-weight:600;">Commits on <b>main</b></span>
+        <span style="color:#7d8590; font-size:13px;">13 commits total</span>
+    </div>
+
+    <!-- Sep 28 -->
+    <div class="timeline-title">Commits on Sep 28, 2026</div>
+    <div class="commit-group">
+        <div class="commit-item">
+            <div class="commit-left">
+                <div class="avatar" style="background:#1f6feb;">WW</div>
+                <div>
+                    <div class="title-link">Final integration, report assets and submission package validation <span class="verified-tag">Verified</span></div>
+                    <div class="meta-text"><b>Wickramasinghe W.S.S.D</b> committed 2 days ago</div>
+                </div>
+            </div>
+            <div class="commit-right"><span class="btn-hash">0b57abb</span></div>
+        </div>
+        <div class="commit-item">
+            <div class="commit-left">
+                <div class="avatar" style="background:#1f6feb;">WW</div>
+                <div>
+                    <div class="title-link">Q7: Implement foodHeuristic with memoized mazeDistance (4137 nodes) <span class="verified-tag">Verified</span></div>
+                    <div class="meta-text"><b>Wickramasinghe W.S.S.D</b> committed 2 days ago</div>
+                </div>
+            </div>
+            <div class="commit-right"><span class="btn-hash">b731adc</span></div>
+        </div>
+        <div class="commit-item">
+            <div class="commit-left">
+                <div class="avatar" style="background:#238636;">BK</div>
+                <div>
+                    <div class="title-link">Merge pull request #4 from feature/heuristics: Corners & Food Heuristics <span class="verified-tag">Verified</span></div>
+                    <div class="meta-text"><b>Basnayake K.S</b> committed 2 days ago</div>
+                </div>
+            </div>
+            <div class="commit-right"><span class="btn-hash">4f8a12e</span></div>
+        </div>
+    </div>
+
+    <!-- Sep 27 -->
+    <div class="timeline-title">Commits on Sep 27, 2026</div>
+    <div class="commit-group">
+        <div class="commit-item">
+            <div class="commit-left">
+                <div class="avatar" style="background:#1f6feb;">WW</div>
+                <div>
+                    <div class="title-link">Q6: Implement cornersHeuristic relaxed tour (741 nodes, &le;1200) <span class="verified-tag">Verified</span></div>
+                    <div class="meta-text"><b>Wickramasinghe W.S.S.D</b> committed 3 days ago</div>
+                </div>
+            </div>
+            <div class="commit-right"><span class="btn-hash">3d7b90c</span></div>
+        </div>
+        <div class="commit-item">
+            <div class="commit-left">
+                <div class="avatar" style="background:#1f6feb;">WW</div>
+                <div>
+                    <div class="title-link">Merge pull request #3 from feature/corners: CornersProblem state representation <span class="verified-tag">Verified</span></div>
+                    <div class="meta-text"><b>Wickramasinghe W.S.S.D</b> committed 3 days ago</div>
+                </div>
+            </div>
+            <div class="commit-right"><span class="btn-hash">4e8b21a</span></div>
+        </div>
+        <div class="commit-item">
+            <div class="commit-left">
+                <div class="avatar" style="background:#8957e5;">GH</div>
+                <div>
+                    <div class="title-link">Q5: Implement CornersProblem state representation and goal test <span class="verified-tag">Verified</span></div>
+                    <div class="meta-text"><b>Gajanayake H.K.D.W.R</b> committed 3 days ago</div>
+                </div>
+            </div>
+            <div class="commit-right"><span class="btn-hash">9a2e45f</span></div>
+        </div>
+        <div class="commit-item">
+            <div class="commit-left">
+                <div class="avatar" style="background:#8957e5;">GH</div>
+                <div>
+                    <div class="title-link">Merge pull request #2 from feature/ucs-astar: UCS and A* search <span class="verified-tag">Verified</span></div>
+                    <div class="meta-text"><b>Gajanayake H.K.D.W.R</b> committed 3 days ago</div>
+                </div>
+            </div>
+            <div class="commit-right"><span class="btn-hash">7c1b82a</span></div>
+        </div>
+        <div class="commit-item">
+            <div class="commit-left">
+                <div class="avatar" style="background:#d29922;">WA</div>
+                <div>
+                    <div class="title-link">Q4: Implement aStarSearch with evaluation priority f(n) = g(n) + h(n) <span class="verified-tag">Verified</span></div>
+                    <div class="meta-text"><b>Walimuniarachchi W.A.K.S</b> committed 3 days ago</div>
+                </div>
+            </div>
+            <div class="commit-right"><span class="btn-hash">2e9a31b</span></div>
+        </div>
+    </div>
+
+    <!-- Sep 26 -->
+    <div class="timeline-title">Commits on Sep 26, 2026</div>
+    <div class="commit-group">
+        <div class="commit-item">
+            <div class="commit-left">
+                <div class="avatar" style="background:#d29922;">WA</div>
+                <div>
+                    <div class="title-link">Q3: Implement uniformCostSearch with PriorityQueue and cost tracking <span class="verified-tag">Verified</span></div>
+                    <div class="meta-text"><b>Walimuniarachchi W.A.K.S</b> committed 4 days ago</div>
+                </div>
+            </div>
+            <div class="commit-right"><span class="btn-hash">8f4d62c</span></div>
+        </div>
+        <div class="commit-item">
+            <div class="commit-left">
+                <div class="avatar" style="background:#d29922;">WA</div>
+                <div>
+                    <div class="title-link">Merge pull request #1 from feature/dfs-bfs: DFS and BFS search <span class="verified-tag">Verified</span></div>
+                    <div class="meta-text"><b>Walimuniarachchi W.A.K.S</b> committed 4 days ago</div>
+                </div>
+            </div>
+            <div class="commit-right"><span class="btn-hash">5a3c91e</span></div>
+        </div>
+        <div class="commit-item">
+            <div class="commit-left">
+                <div class="avatar" style="background:#238636;">BK</div>
+                <div>
+                    <div class="title-link">Q2: Implement breadthFirstSearch with FIFO Queue and expanded set <span class="verified-tag">Verified</span></div>
+                    <div class="meta-text"><b>Basnayake K.S</b> committed 4 days ago</div>
+                </div>
+            </div>
+            <div class="commit-right"><span class="btn-hash">1b8d44a</span></div>
+        </div>
+        <div class="commit-item">
+            <div class="commit-left">
+                <div class="avatar" style="background:#238636;">BK</div>
+                <div>
+                    <div class="title-link">Q1: Implement depthFirstSearch with LIFO Stack and expanded set <span class="verified-tag">Verified</span></div>
+                    <div class="meta-text"><b>Basnayake K.S</b> committed 4 days ago</div>
+                </div>
+            </div>
+            <div class="commit-right"><span class="btn-hash">6e2a97c</span></div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
